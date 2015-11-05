@@ -6,7 +6,7 @@
 'use strict';
 
 var gutil = require('gulp-util');
-var merge = require('deepmerge');
+var merge = require('controlled-merge');
 var path = require('path');
 var through = require('through');
 
@@ -29,6 +29,7 @@ module.exports = function(fileName, edit, startObj, endObj, exportModule) {
 
   var merged = startObj || {};
   var firstFile = null;
+  var conflictingKeys = [];
 
   function parseAndMerge(file) {
     if (file.isNull()) {
@@ -44,7 +45,17 @@ module.exports = function(fileName, edit, startObj, endObj, exportModule) {
     }
 
     try {
-      merged = merge(merged, editFunc(JSON.parse(file.contents.toString('utf8'))));
+      merged = merge(
+          function(val1, val2, key) {
+            conflictingKeys.push({
+              'val1': val1,
+              'val2': val2,
+              'key': key,
+              'filePath': file.path
+            });
+            // There is no way to tell which value should be used, so just use the first one
+            return val1;
+          }, [merged, editFunc(JSON.parse(file.contents.toString('utf8')))]);
     } catch (err) {
       return this.emit('error', new gutil.PluginError(PLUGIN_NAME, err));
     }
