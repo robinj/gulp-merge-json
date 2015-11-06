@@ -17,6 +17,17 @@ module.exports = function (fileName, edit, startObj, endObj, exportModule) {
         throw new gutil.PluginError(PLUGIN_NAME, PLUGIN_NAME + ': Invalid start and/or end object!');
     }
 
+    var conflictResolutionFunction = function (val1, val2, key) {
+        conflictingKeys.push({
+            'val1': val1,
+            'val2': val2,
+            'key': key,
+            'filePath': file.path
+        });
+        // There is no way to tell which value should be used, so just use the first one
+        return val1;
+    }
+
     var editFunc;
 
     if (typeof edit === 'function') {
@@ -49,17 +60,7 @@ module.exports = function (fileName, edit, startObj, endObj, exportModule) {
         }
 
         try {
-            merged = merge(
-                function (val1, val2, key) {
-                    conflictingKeys.push({
-                        'val1': val1,
-                        'val2': val2,
-                        'key': key,
-                        'filePath': file.path
-                    });
-                    // There is no way to tell which value should be used, so just use the first one
-                    return val1;
-                }, [merged, editFunc(JSON.parse(file.contents.toString('utf8')))]);
+            merged = merge(conflictResolutionFunction, [merged, editFunc(JSON.parse(file.contents.toString('utf8')))]);
         } catch (err) {
             return this.emit('error', new gutil.PluginError(PLUGIN_NAME, err));
         }
@@ -71,7 +72,7 @@ module.exports = function (fileName, edit, startObj, endObj, exportModule) {
         }
 
         if (endObj) {
-            merged = merge(merged, endObj);
+            merged = merge(conflictResolutionFunction, [merged, endObj]);
         }
 
         var contents = JSON.stringify(merged, null, '\t');
@@ -86,6 +87,10 @@ module.exports = function (fileName, edit, startObj, endObj, exportModule) {
             path: path.join(firstFile.base, fileName),
             contents: new Buffer(contents),
         });
+
+        if(conflictingKeys.length > 0) {
+            this.emit('error', );
+        }
 
         this.emit('data', output);
         this.emit('end');
