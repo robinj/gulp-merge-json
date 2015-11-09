@@ -36,19 +36,34 @@ module.exports = function (fileName, edit, startObj, endObj, exportModule) {
     var merged = startObj || {};
     var firstFile = null;
     var conflictingKeys = [];
+    var keyList = [];
 
 
     function parseAndMerge(file) {
+        var fileContents, currentFilePath, conflictResolutionFunction, key;
 
-        var conflictResolutionFunction = function (val1, val2, key) {
+        currentFilePath = file.path;
+
+        fileContents = JSON.parse(file.contents.toString('utf8'));
+
+        for (key in fileContents) {
+            if (fileContents.hasOwnProperty(key) && !keyList[key]) {
+                keyList[key] = currentFilePath;
+            }
+        }
+
+        conflictResolutionFunction = function (val1, val2, key) {
             var error;
 
             error = {
                 'val1': val1,
                 'val2': val2,
                 'key': key,
-                'filePath': file.path
+                'filePath1': keyList[key],
+                'filePath2': currentFilePath
             };
+
+            console.log(file.base);
 
             conflictingKeys.push(error);
 
@@ -68,9 +83,8 @@ module.exports = function (fileName, edit, startObj, endObj, exportModule) {
             firstFile = file;
         }
 
-
         try {
-            merged = merge(conflictResolutionFunction, [merged, editFunc(JSON.parse(file.contents.toString('utf8')))]);
+            merged = merge(conflictResolutionFunction, [merged, editFunc(fileContents)]);
         } catch (err) {
             return this.emit('error', new gutil.PluginError(PLUGIN_NAME, err));
         }
@@ -116,15 +130,15 @@ module.exports = function (fileName, edit, startObj, endObj, exportModule) {
         });
 
 
-        if(conflictingKeys.length > 0) {
+        if (conflictingKeys.length > 0) {
             console.log('conflicting keys have been found');
-            conflictingKeys.forEach(function(value) {
-                console.log('Key ' + value.key + ' in ' + value.filePath);
+            conflictingKeys.forEach(function (value) {
+                console.log('Key ' + value.key + 'found in ' + value.filePath1 + ' but also in ' + value.filePath2);
             });
 
             this.emit('error', new gutil.PluginError(PLUGIN_NAME, {
                 name: 'GulpControlledMergeError',
-                message: 'Failed with ' + conflictingKeys.length + ' conflicting resource keys'
+                message: 'Failed with ' + conflictingKeys.length + ' conflicting resource key' + (conflictingKeys.length > 0 ? 's' : '')
             }));
         }
 
