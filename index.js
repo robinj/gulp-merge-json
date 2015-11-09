@@ -1,4 +1,5 @@
 /*!
+ * Copyright 2015 Robin Janssens
  * Copyright 2015 Josh Swan
  * Released under the MIT license
  * https://github.com/joshswan/gulp-merge/blob/master/LICENSE
