@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "gulp-util": "^3.0.6",
-    "deepmerge": "^0.2.10",
+    "controlled-merge-with-attribute": "1.1.x",
     "through": "^2.3.8"
   },
   "devDependencies": {

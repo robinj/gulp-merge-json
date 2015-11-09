@@ -6,26 +6,17 @@
 'use strict';
 
 var gutil = require('gulp-util');
-var merge = require('controlled-merge');
+var merge = require('controlled-merge-with-attribute');
 var path = require('path');
 var through = require('through');
 
 var PLUGIN_NAME = 'gulp-merge-json';
 
 module.exports = function (fileName, edit, startObj, endObj, exportModule) {
+    var file;
+
     if ((startObj && typeof startObj !== 'object') || (endObj && typeof endObj !== 'object')) {
         throw new gutil.PluginError(PLUGIN_NAME, PLUGIN_NAME + ': Invalid start and/or end object!');
-    }
-
-    var conflictResolutionFunction = function (val1, val2, key) {
-        conflictingKeys.push({
-            'val1': val1,
-            'val2': val2,
-            'key': key,
-            'filePath': file.path
-        });
-        // There is no way to tell which value should be used, so just use the first one
-        return val1;
     }
 
     var editFunc;
@@ -46,7 +37,25 @@ module.exports = function (fileName, edit, startObj, endObj, exportModule) {
     var firstFile = null;
     var conflictingKeys = [];
 
+
     function parseAndMerge(file) {
+
+        var conflictResolutionFunction = function (val1, val2, key) {
+            var error;
+
+            error = {
+                'val1': val1,
+                'val2': val2,
+                'key': key,
+                'filePath': file.path
+            };
+
+            conflictingKeys.push(error);
+
+            // There is no way to tell which value should be used, so just use the first one
+            return val2;
+        };
+
         if (file.isNull()) {
             return this.queue(file);
         }
@@ -59,6 +68,7 @@ module.exports = function (fileName, edit, startObj, endObj, exportModule) {
             firstFile = file;
         }
 
+
         try {
             merged = merge(conflictResolutionFunction, [merged, editFunc(JSON.parse(file.contents.toString('utf8')))]);
         } catch (err) {
@@ -67,11 +77,28 @@ module.exports = function (fileName, edit, startObj, endObj, exportModule) {
     }
 
     function endStream() {
+
+        var conflictResolutionFunction = function (val1, val2, key) {
+            var error;
+
+            error = new gutil.PluginError('gulp-controlled-merge-json', {
+                'val1': val1,
+                'val2': val2,
+                'key': key,
+            });
+
+            conflictingKeys.push(error);
+
+            // There is no way to tell which value should be used, so just use the first one
+            return val2;
+        };
+
         if (!firstFile) {
             return this.emit('end');
         }
 
         if (endObj) {
+            console.log(endObj);
             merged = merge(conflictResolutionFunction, [merged, endObj]);
         }
 
@@ -88,8 +115,17 @@ module.exports = function (fileName, edit, startObj, endObj, exportModule) {
             contents: new Buffer(contents),
         });
 
+
         if(conflictingKeys.length > 0) {
-            this.emit('error', );
+            console.log('conflicting keys have been found');
+            conflictingKeys.forEach(function(value) {
+                console.log('Key ' + value.key + ' in ' + value.filePath);
+            });
+
+            this.emit('error', new gutil.PluginError(PLUGIN_NAME, {
+                name: 'GulpControlledMergeError',
+                message: 'Failed with ' + conflictingKeys.length + ' conflicting resource keys'
+            }));
         }
 
         this.emit('data', output);
