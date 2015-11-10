@@ -13,43 +13,11 @@ var merge = require('gulp-merge-json');
 gulp.src('jsonFiles/**/*.json')
 	.pipe(merge('combined.json'))
 	.pipe(gulp.dest('./dist'));
-
-/*
-	Edit JSON with function
- */
-gulp.src('jsonFiles/**/*.json')
-	.pipe(merge('combined.json', function(parsedJson) {
-		if (parsedJson.someValue) {
-			delete parsedJson.otherValue;
-		}
-
-		return parsedJson;
-	}))
-	.pipe(gulp.dest('./dist'));
-
-/*
-	Provide a default object (files are merged in order so object values will be overwritten)
- */
-gulp.src('jsonFiles/**/*.json')
-	.pipe(merge('combined.json', false, {someKey: 'defaultValue'}))
-	.pipe(gulp.dest('./dist'));
-
-/*
-	Provide an overwriting object (merged at the end)
- */
-gulp.src('jsonFiles/**/*.json')
-	.pipe(merge('combined.json', false, false, {someKey: 'specialValue'}))
-	.pipe(gulp.dest('./dist'));
-
-/*
-	Use module.exports
- */
-gulp.src('jsonFiles/**/*.json')
-	.pipe(merge('dataModule.js', false, false, false, true))
-	.pipe(gulp.dest('./dist'));
 ```
 
 ## Example Input
+This is an example of an input where there are no conflicting keys
+
 ```JSON
 /*
 	json/defaults.json
