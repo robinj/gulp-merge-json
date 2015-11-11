@@ -1,29 +1,30 @@
 {
-  "name": "gulp-merge-json",
-  "version": "0.1.0",
-  "description": "A gulp plugin to merge JSON files into one file",
-  "author": "Josh Swan <josh@sportifik.com>",
+  "name": "gulp-controlled-merge-json",
+  "version": "0.2.0",
+  "description": "A gulp plugin to merge JSON files into one file with additional conflict resolution functionality",
+  "author": "Robin Janssens <robin.janssens@gmail.com>",
   "main": "./index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/joshswan/gulp-merge-json"
+    "url": "https://github.com/robinj/gulp-merge-json"
   },
   "bugs": {
-    "url": "https://github.com/joshswan/gulp-merge-json/issues"
+    "url": "https://github.com/robinj/gulp-merge-json/issues"
   },
   "keywords": [
     "gulpplugin",
     "gulp",
     "json",
-    "merge"
+    "merge",
+    "controlled"
   ],
   "scripts": {
-    "test": "istanbul test _mocha --report html -- test/*.js --reporter spec",
+    "test": "istanbul test ./node_modules/mocha/bin/_mocha --report html -- test/*.js --reporter spec",
     "coveralls": "istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
   },
   "dependencies": {
     "gulp-util": "^3.0.6",
-    "deepmerge": "^0.2.10",
+    "controlled-merge-with-attribute": "1.1.x",
     "through": "^2.3.8"
   },
   "devDependencies": {
