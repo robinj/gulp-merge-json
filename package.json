@@ -1,6 +1,6 @@
 {
   "name": "gulp-controlled-merge-json",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A gulp plugin to merge JSON files into one file with additional conflict resolution functionality",
   "author": "Robin Janssens <robin.janssens@gmail.com>",
   "main": "./index.js",
