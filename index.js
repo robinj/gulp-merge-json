@@ -7,7 +7,7 @@
 'use strict';
 
 var gutil = require('gulp-util');
-var merge = require('controlled-merge-with-attribute');
+var merge = require('controlled-merge');
 var path = require('path');
 var through = require('through');
 
