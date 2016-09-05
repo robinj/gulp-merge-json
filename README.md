@@ -80,13 +80,13 @@ This is an example of an input where there are no conflicting keys
 }
 ```
 
-[build-url]: https://travis-ci.org/joshswan/gulp-merge-json
-[build-image]: https://travis-ci.org/joshswan/gulp-merge-json.svg?branch=master
-[coverage-url]: https://coveralls.io/github/joshswan/gulp-merge-json?branch=master
-[coverage-image]: https://coveralls.io/repos/joshswan/gulp-merge-json/badge.svg?branch=master&service=github
-[depstat-url]: https://david-dm.org/joshswan/gulp-merge-json
-[depstat-image]: https://david-dm.org/joshswan/gulp-merge-json.svg
-[devdepstat-url]: https://david-dm.org/joshswan/gulp-merge-json#info=devDependencies
-[devdepstat-image]: https://david-dm.org/joshswan/gulp-merge-json/dev-status.svg
-[npm-url]: https://www.npmjs.com/package/gulp-merge-json
-[npm-image]: https://badge.fury.io/js/gulp-merge-json.svg
+[build-url]: https://travis-ci.org/robinj/gulp-controlled-merge-json
+[build-image]: https://travis-ci.org/robinj/gulp-controlled-merge-json.svg?branch=master
+[coverage-url]: https://coveralls.io/github/robinj/gulp-controlled-merge-json?branch=master
+[coverage-image]: https://coveralls.io/repos/robinj/gulp-controlled-merge-json/badge.svg?branch=master&service=github
+[depstat-url]: https://david-dm.org/robinj/gulp-controlled-merge-json
+[depstat-image]: https://david-dm.org/robinj/gulp-controlled-merge-json.svg
+[devdepstat-url]: https://david-dm.org/robinj/gulp-controlled-merge-json#info=devDependencies
+[devdepstat-image]: https://david-dm.org/robinj/gulp-controlled-merge-json/dev-status.svg
+[npm-url]: https://www.npmjs.com/package/gulp-controlled-merge-json
+[npm-image]: https://badge.fury.io/js/gulp-controlled-merge-json.svg
