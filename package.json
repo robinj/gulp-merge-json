@@ -29,11 +29,11 @@
   },
   "devDependencies": {
     "coveralls": "*", 
-    "eslint": "^1.4.3",
+    "eslint": "3.x",
     "gulp": "^3.9.0",
     "istanbul": "*",
     "mocha": "*",
-    "should": "^7.1.0"
+    "should": "11.x"
   },
   "license": "MIT"
 }
