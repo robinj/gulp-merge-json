@@ -1,11 +1,11 @@
-# gulp-merge-json
+# gulp-controlled-merge-json
 [![NPM Version][npm-image]][npm-url] [![Build Status][build-image]][build-url] [![Coverage Status][coverage-image]][coverage-url] [![Dependency Status][depstat-image]][depstat-url] [![Dev Dependency Status][devdepstat-image]][devdepstat-url]
 
 A gulp plugin for deep-merging multiple JSON files into one file. Export as JSON or a node module.
 
 ## Usage
 ```javascript
-var merge = require('gulp-merge-json');
+var merge = require('gulp-controlled-merge-json');
 
 /*
 	Basic functionality
