@@ -1,7 +1,9 @@
 # gulp-controlled-merge-json
 [![NPM Version][npm-image]][npm-url] [![Build Status][build-image]][build-url] [![Coverage Status][coverage-image]][coverage-url] [![Dependency Status][depstat-image]][depstat-url] [![Dev Dependency Status][devdepstat-image]][devdepstat-url]
 
-A gulp plugin for deep-merging multiple JSON files into one file. Export as JSON or a node module.
+A gulp plugin for deep-merging multiple JSON files into one file. Any conflicting attributes are recorded and output to the console once the merge has completed. 
+
+The main use case, and the reason that this plugin was developed, is the merging of language files.
 
 ## Usage
 ```javascript
@@ -14,6 +16,8 @@ gulp.src('jsonFiles/**/*.json')
 	.pipe(merge('combined.json'))
 	.pipe(gulp.dest('./dist'));
 ```
+
+This will merge your input files into a file called "combined.json" and then output them into your dist directory.
 
 ## Example Input
 This is an example of an input where there are no conflicting keys
@@ -79,6 +83,18 @@ This is an example of an input where there are no conflicting keys
 	}
 }
 ```
+
+## Conflicts
+In the event of a conflict, the first value will be merged and the attribute name will be output to the console. 
+```
+conflicting keys have been found
+Key myKey found in /path/to/jsonFile.json but also in  /path/to/other/jsonFile.json
+```
+
+The plugin will then emit an error.
+
+# Credits
+Based on gulp-merge-json by [@joshswan](https://github.com/joshswan). Adapted by [@robinj](https://github.com/robinj) ([Robin Janssens](https://robin.pm)) and powered by [9888](https://9888.uk).
 
 [build-url]: https://travis-ci.org/robinj/gulp-controlled-merge-json
 [build-image]: https://travis-ci.org/robinj/gulp-controlled-merge-json.svg?branch=master
