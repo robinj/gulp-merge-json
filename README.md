@@ -94,7 +94,7 @@ Key myKey found in /path/to/jsonFile.json but also in  /path/to/other/jsonFile.j
 The plugin will then emit an error.
 
 # Credits
-Based on gulp-merge-json by [@joshswan](https://github.com/joshswan). Adapted by [@robinj](https://github.com/robinj) ([Robin Janssens](https://robin.pm)) and powered by [9888](https://9888.uk).
+Based on gulp-merge-json by [@joshswan](https://github.com/joshswan). Adapted by [@robinj][robin-janssens-gh] ([Robin Janssens][robin-janssens]).
 
 [build-url]: https://travis-ci.org/robinj/gulp-controlled-merge-json
 [build-image]: https://travis-ci.org/robinj/gulp-controlled-merge-json.svg?branch=master
@@ -106,3 +106,5 @@ Based on gulp-merge-json by [@joshswan](https://github.com/joshswan). Adapted by
 [devdepstat-image]: https://david-dm.org/robinj/gulp-controlled-merge-json/dev-status.svg
 [npm-url]: https://www.npmjs.com/package/gulp-controlled-merge-json
 [npm-image]: https://badge.fury.io/js/gulp-controlled-merge-json.svg
+[robin-janssens]: https://robinjanssens.com
+[robin-janssens-gh]: https://github.com/robinj
