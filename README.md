@@ -1,4 +1,7 @@
 # gulp-controlled-merge-json
+
+**Warning: this repo is not maintained anymore. It will continue to exist as I am aware of projects which depend on it. If you need to make changes, please fork this repo**
+
 [![NPM Version][npm-image]][npm-url] [![Build Status][build-image]][build-url] [![Coverage Status][coverage-image]][coverage-url] [![Dependency Status][depstat-image]][depstat-url] [![Dev Dependency Status][devdepstat-image]][devdepstat-url]
 
 A gulp plugin for deep-merging multiple JSON files into one file. Any conflicting attributes are recorded and output to the console once the merge has completed. 
